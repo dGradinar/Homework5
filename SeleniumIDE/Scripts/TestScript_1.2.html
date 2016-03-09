@@ -1,0 +1,152 @@
+package com.example.tests;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class TestScript12 {
+  private WebDriver driver;
+  private String baseUrl;
+  private boolean acceptNextAlert = true;
+  private StringBuffer verificationErrors = new StringBuffer();
+
+  @Before
+  public void setUp() throws Exception {
+    driver = new FirefoxDriver();
+    baseUrl = "http://derp-bear.herokuapp.com/";
+    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+  }
+
+  @Test
+  public void testScript12() throws Exception {
+    driver.get(baseUrl + "/forms/basic_form_example");
+    driver.findElement(By.id("first_name")).clear();
+    driver.findElement(By.id("first_name")).sendKeys("Dmitri");
+    driver.findElement(By.id("last_name")).clear();
+    driver.findElement(By.id("last_name")).sendKeys("Gradinar");
+    driver.findElement(By.id("email")).clear();
+    driver.findElement(By.id("email")).sendKeys("gradinar95@gmail.com");
+    driver.findElement(By.id("website_url")).clear();
+    driver.findElement(By.id("website_url")).sendKeys("https://www.google.com.ua");
+    driver.findElement(By.xpath("//button[@id='pet_select']")).click();
+    driver.findElement(By.linkText("Dog")).click();
+    driver.findElement(By.id("date_of_birth")).clear();
+    driver.findElement(By.id("date_of_birth")).sendKeys("06.09.1995");
+    driver.findElement(By.cssSelector("span.second-icon.fui-radio-checked")).click();
+    driver.findElement(By.cssSelector("#sizcache05009996717173361 > span.icons > span.second-icon.fui-checkbox-checked")).click();
+    driver.findElement(By.id("password_field")).clear();
+    driver.findElement(By.id("password_field")).sendKeys("dima1dima");
+    driver.findElement(By.id("free_text_area")).clear();
+    driver.findElement(By.id("free_text_area")).sendKeys("dGradinar");
+    driver.findElement(By.id("submit_button")).click();
+    try {
+      assertEquals("Your Information", driver.findElement(By.cssSelector("legend")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.cssSelector("legend")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertEquals("Date", driver.findElement(By.xpath("//section[@id='results']/header/ul/li[2]/fieldset/legend")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.xpath("//section[@id='results']/header/ul/li[2]/fieldset/legend")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertEquals("Date", driver.findElement(By.xpath("//section[@id='results']/header/ul/li[2]/fieldset/legend")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.xpath("//section[@id='results']/header/ul/li[2]/fieldset/legend")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertEquals("Date", driver.findElement(By.xpath("//section[@id='results']/header/ul/li[2]/fieldset/legend")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.cssSelector("ol")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertEquals("First Name Last Name Email Website Select a Pet", driver.findElement(By.cssSelector("ol")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.cssSelector("ol")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    assertEquals("First Name Last Name Email Website Select a Pet", driver.findElement(By.cssSelector("ol")).getText());
+    assertEquals("", driver.findElement(By.id("dob")).getText());
+    driver.findElement(By.id("sizcache024340548735539846")).click();
+    driver.findElement(By.id("sizcache024340548735539846")).click();
+    assertEquals("On", driver.findElement(By.xpath("//section[@id='results']/header/ul/li[3]/fieldset/ol/li/div/div/label")).getText());
+    assertEquals("Walk", driver.findElement(By.xpath("//section[@id='results']/header/ul/li[4]/fieldset/ol/li/div/div/label")).getText());
+    try {
+      assertTrue(isElementPresent(By.xpath("//section[@id='results']/header/ul/li[5]/fieldset/ol/li/label")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    assertEquals("Example Password", driver.findElement(By.xpath("//section[@id='results']/header/ul/li[5]/fieldset/ol/li/label")).getText());
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    driver.quit();
+    String verificationErrorString = verificationErrors.toString();
+    if (!"".equals(verificationErrorString)) {
+      fail(verificationErrorString);
+    }
+  }
+
+  private boolean isElementPresent(By by) {
+    try {
+      driver.findElement(by);
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
+  private boolean isAlertPresent() {
+    try {
+      driver.switchTo().alert();
+      return true;
+    } catch (NoAlertPresentException e) {
+      return false;
+    }
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+      Alert alert = driver.switchTo().alert();
+      String alertText = alert.getText();
+      if (acceptNextAlert) {
+        alert.accept();
+      } else {
+        alert.dismiss();
+      }
+      return alertText;
+    } finally {
+      acceptNextAlert = true;
+    }
+  }
+}

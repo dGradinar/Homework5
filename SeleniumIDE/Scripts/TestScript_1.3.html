@@ -1,0 +1,121 @@
+package com.example.tests;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class TestScript13 {
+  private WebDriver driver;
+  private String baseUrl;
+  private boolean acceptNextAlert = true;
+  private StringBuffer verificationErrors = new StringBuffer();
+
+  @Before
+  public void setUp() throws Exception {
+    driver = new FirefoxDriver();
+    baseUrl = "http://derp-bear.herokuapp.com/forms/basic_form_example";
+    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+  }
+
+  @Test
+  public void testScript13() throws Exception {
+    driver.get(baseUrl + "/forms/basic_form_example");
+    driver.findElement(By.id("first_name")).clear();
+    driver.findElement(By.id("first_name")).sendKeys("Dmitri");
+    driver.findElement(By.id("last_name")).clear();
+    driver.findElement(By.id("last_name")).sendKeys("Gradinar");
+    driver.findElement(By.id("email")).clear();
+    driver.findElement(By.id("email")).sendKeys("gradinar95@gmail.com");
+    driver.findElement(By.id("website_url")).clear();
+    driver.findElement(By.id("website_url")).sendKeys("https://www.google.com.ua");
+    driver.findElement(By.xpath("//button[@id='pet_select']")).click();
+    driver.findElement(By.linkText("Dog")).click();
+    driver.findElement(By.id("date_of_birth")).clear();
+    driver.findElement(By.id("date_of_birth")).sendKeys("06.09.1995");
+    driver.findElement(By.cssSelector("span.second-icon.fui-radio-checked")).click();
+    try {
+      assertTrue(isElementPresent(By.xpath("//li[@id='transportation_example']/fieldset/ol/li/div/div/label[3]/span/span[2]")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.xpath("//li[@id='transportation_example']/fieldset/ol/li/div/div/label[2]/span/span[2]")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    try {
+      assertTrue(isElementPresent(By.xpath("//li[@id='transportation_example']/fieldset/ol/li/div/div/label")));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    driver.findElement(By.xpath("//label[3]/span/span[2]")).click();
+    driver.findElement(By.id("password_field")).clear();
+    driver.findElement(By.id("password_field")).sendKeys("dima1dima");
+    driver.findElement(By.id("free_text_area")).clear();
+    driver.findElement(By.id("free_text_area")).sendKeys("dima");
+    driver.findElement(By.id("submit_button")).click();
+    try {
+      assertEquals("Thank you for submitting the form", driver.findElement(By.cssSelector("h1")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    driver.findElement(By.id("first_name")).clear();
+    driver.findElement(By.id("first_name")).sendKeys("Petya");
+    driver.findElement(By.id("last_name")).clear();
+    driver.findElement(By.id("last_name")).sendKeys("Gradinaee");
+    driver.findElement(By.id("email")).clear();
+    driver.findElement(By.id("email")).sendKeys("gradinar75@gmail.com");
+    try {
+      assertEquals("Thank you for submitting the form", driver.findElement(By.cssSelector("h1")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    driver.quit();
+    String verificationErrorString = verificationErrors.toString();
+    if (!"".equals(verificationErrorString)) {
+      fail(verificationErrorString);
+    }
+  }
+
+  private boolean isElementPresent(By by) {
+    try {
+      driver.findElement(by);
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
+  private boolean isAlertPresent() {
+    try {
+      driver.switchTo().alert();
+      return true;
+    } catch (NoAlertPresentException e) {
+      return false;
+    }
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+      Alert alert = driver.switchTo().alert();
+      String alertText = alert.getText();
+      if (acceptNextAlert) {
+        alert.accept();
+      } else {
+        alert.dismiss();
+      }
+      return alertText;
+    } finally {
+      acceptNextAlert = true;
+    }
+  }
+}
